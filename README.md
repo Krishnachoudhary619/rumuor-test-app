@@ -1,261 +1,379 @@
-# 🚀 Flutter Demo App
+# 📱 Rumour — Anonymous Room-Code Chat App
 
-A scalable Flutter application built using **Clean Architecture**, **Riverpod**, and **Material 3**, designed for maintainability, performance, and production readiness. ( Whole Demo app with no api calls but feels like real with all layers)
+A real-time anonymous chat application built using **Flutter** and **Firebase Cloud Firestore**, designed with an **offline-first architecture**, scalable state management, and pixel-perfect UI.
+
+---
+
+## 🚀 Overview
+
+Rumour allows users to join chat rooms using a unique room code and participate in anonymous conversations. Each user is assigned a **random identity per room**, ensuring privacy while maintaining continuity across sessions.
 
 ---
 
 ## ✨ Features
 
-- Suggestion Page (Mocked Pagination list)
-- Chat Page with real-time interaction
-- Chat history with local persistence (using shared preference)
-- Dark and light mode (toogle)
+### 🔐 Anonymous Identity
 
-Other key insights:
+- Random user generated via `https://randomuser.me/api/`
+- Identity persists locally per room using SharedPreferences
+- Rejoining a room restores the same identity
 
-- Used Riverpod for state management
-- Used Clean Architecture for project structure
-- Used Flavours for different environments
-- Used Code gen packages (Freezed, Retrofit, FlutterGen)
-- Used Material 3 for UI
-- Used Good coding practices :)
+---
+
+### 💬 Real-Time Chat
+
+- Powered by Firebase Cloud Firestore
+- Instant updates using snapshot listeners
+- Server timestamps for consistency
+
+---
+
+### 📜 Chat Experience
+
+- Date separators (Today, Yesterday, etc.)
+- Sender-based message alignment (left/right)
+- Pagination for older messages
+- Pagination loader for smooth UX
+
+---
+
+### 🌐 Offline-First Architecture
+
+- Firestore offline persistence enabled
+- Cached messages visible without internet
+- Messages sent offline sync automatically when online
+
+---
+
+### 🏠 Room System
+
+- Create new rooms
+- Join existing rooms via code
+- Room-based chat isolation
+
+---
+
+### 🛠️ Engineering Features (Added by Me )
+
+- **Flavors-enabled Firebase setup**
+    - Supports multiple environments (dev/prod)
+    - Uses separate Firebase configurations for scalability and safer deployments
+
+- **Clean Architecture**
+    - Clear separation of layers: Presentation → State → Domain → Data
+    - Improves maintainability, scalability, and testability
+
+- **Theme Switching Ready**
+    - Architecture prepared for light/dark mode support
+    - Centralized theming system (`theme/` module)
+    - Easy to extend for dynamic theme switching
+
+---
+
+## 📊 Architecture Overview
+
+```text
+UI (presentation/)
+   ↓
+State (Riverpod Notifiers)
+   ↓
+Repository (Domain abstraction)
+   ↓
+Source (Firestore / API / Local)
+   ↓
+External Systems
+```
+
+---
+
+## 🧭 Architecture Diagram
+
+```text
+                        ┌────────────────────────────┐
+                        │        UI LAYER            │
+                        │ (Flutter Widgets / Pages)  │
+                        └────────────┬───────────────┘
+                                     │
+                                     ▼
+                        ┌────────────────────────────┐
+                        │     STATE MANAGEMENT       │
+                        │        (Riverpod)          │
+                        └────────────┬───────────────┘
+                                     │
+                                     ▼
+                        ┌────────────────────────────┐
+                        │       REPOSITORY LAYER     │
+                        └────────────┬───────────────┘
+                                     │
+                                     ▼
+                        ┌────────────────────────────┐
+                        │        DATA SOURCE         │
+                        └────────────┬───────────────┘
+                                     │
+                ┌────────────────────┴────────────────────┐
+                ▼                                         ▼
+     Firebase Firestore                          External APIs
+```
+
+---
+
+## 📂 Codebase Structure & Flow
+
+Project structure (trimmed):
+
+```text
+lib/
+├── core/
+├── data/
+├── domain/
+├── presentation/
+├── firebase/
+├── main.dart
+└── app.dart
+```
+
+---
+
+### 🔹 Presentation Layer (`presentation/`)
+
+Handles UI and user interaction.
+
+- `chat/` → Chat UI (bubble, list, input)
+- `home/` → Room join/create
+- `shared/` → Reusable components
+- `routes/` → Navigation
+
+👉 Pure UI — no business logic
+
+---
+
+### 🔹 State Layer (Riverpod)
+
+Located inside:
+
+```
+presentation/.../providers/
+```
+
+Handles:
+
+- Chat state → `chat_notifier.dart`
+- Room flow → `room_notifier.dart`
+- User identity → `random_user_notifier.dart`
+
+👉 Acts as bridge between UI and data layer
+
+---
+
+### 🔹 Domain Layer (`domain/`)
+
+Contains:
+
+- Pure models (Freezed)
+- Repository contracts
+
+Examples:
+
+- `message_model.dart`
+- `random_user_model.dart`
+- `chat_repo.dart`
+
+👉 No external dependencies
+
+---
+
+### 🔹 Data Layer (`data/`)
+
+#### 📌 Repository
+
+- Implements domain contracts
+- Example: `chat_repo_impl.dart`
+
+#### 📌 Source
+
+- Firestore → `chat_source.dart`
+- API → `random_user_source.dart`
+- Local → `shar_pref.dart`
+
+#### 📌 Helpers
+
+- Timestamp conversion
+- API setup
+- SharedPref keys
+
+---
+
+### 🔹 Core Layer (`core/`)
+
+Reusable infrastructure:
+
+- Firestore service
+- Connectivity providers
+- Extensions & utilities
+- Error handling
+
+---
+
+## 🔄 Chat Flow
+
+```text
+User sends message
+   ↓
+ChatInputWidget
+   ↓
+ChatNotifier
+   ↓
+ChatRepository
+   ↓
+ChatSource (Firestore)
+   ↓
+Firestore write
+   ↓
+snapshots() listener
+   ↓
+ChatNotifier (merge + sort)
+   ↓
+UI updates
+```
+
+---
+
+## 🌐 Offline Flow
+
+```text
+Offline Mode
+   ↓
+Firestore Local Cache
+   ↓
+snapshots() listener
+   ↓
+ChatNotifier
+   ↓
+UI shows cached messages
+```
+
+---
+
+## 🔥 Firebase Firestore Data Structure
+
+```text
+rooms (collection)
+  └── {roomId}
+        ├── lastMessage
+        ├── lastMessageAt
+        └── messages (subcollection)
+              └── {messageId}
+                    ├── text
+                    ├── senderId
+                    ├── senderName
+                    ├── createdAt (serverTimestamp)
+```
+
+---
+
+## 🧠 Identity Persistence Strategy
+
+Stored per room:
+
+```
+room_user_<roomId> → RandomUserModel JSON
+```
+
+Ensures:
+
+- Same identity on rejoin
+- Different identity across rooms
+
+---
+
+## ⚡ Key Engineering Decisions
+
+### ✅ Offline-First Design
+
+- Avoided `get()` for chat
+- Used `snapshots()` as single source of truth
+
+---
+
+### ✅ Message Deduplication
+
+- Map-based merge using message IDs
+
+---
+
+### ✅ Pagination Handling
+
+- Separate `isPaginating` state
+- Loader shown correctly for reversed list
+
+---
+
+### ✅ Firestore Timestamp Handling
+
+- Supports null timestamps (pending writes)
+- Avoided filtering on `createdAt`
+
+---
+
+## 🎨 UI & Design
+
+Pixel-perfect implementation based on Figma:
+
+👉 https://www.figma.com/design/IkTeb75W5kNVQhv0vPh5mz/Rumour-App
 
 ---
 
 ## 📸 Screenshots
 
-- Light Mode
+| Home                           | Confirmation page                    | Chat page                      |
+| ------------------------------ | ------------------------------------ | ------------------------------ |
+| ![home](./screenshot/home.png) | ![confirm](./screenshot/confirm.png) | ![chat](./screenshot/chat.png) |
 
-| Home                           | Chat                           | History                              |
-| ------------------------------ | ------------------------------ | ------------------------------------ |
-| ![home](./screenshot/home.png) | ![chat](./screenshot/chat.png) | ![history](./screenshot/history.png) |
-
-- Dark Mode
-
-| Home                                | Chat                                | History                                   |
-| ----------------------------------- | ----------------------------------- | ----------------------------------------- |
-| ![home](./screenshot/dark-home.png) | ![chat](./screenshot/dark-chat.png) | ![history](./screenshot/dark-history.png) |
-
-| App Icon                           | Splash                           |     |
+| App Icon & name                    | Splash                           |     |
 | ---------------------------------- | -------------------------------- | --- |
 | ![home](./screenshot/app_page.png) | ![chat](./screenshot/splash.png) | !   |
 
 ---
 
-## 🏗️ Architecture Overview
+## 📦 APK
 
-This project follows a **Clean Architecture + Feature-First structure** with **Riverpod** for state management.
-
-```
-lib/
- ├── core/           # App-wide utilities, constants, extensions
- ├── data/           # API + local data handling (sources, models, repo impl)
- ├── domain/         # Business logic (models + repository contracts)
- ├── presentation/   # UI + state management (Riverpod)
- ├── theme/          # App theming (Material 3)
- └── main.dart       # Entry point
-```
+👉 [Download APK](#)
 
 ---
 
-## 🔁 Data Flow
+## 🎥 Demo Video
 
-```
-UI (Widget)
-   ↓
-Notifier (Riverpod)
-   ↓
-Domain Repository (abstract)
-   ↓
-Repository Impl (data layer)
-   ↓
-Data Source (Remote / Local)
-   ↓
-API / Local Storage
-```
+👉 [Watch Demo](#)
 
 ---
 
-## 🧩 Layer Breakdown
+## 🛠️ Tech Stack
 
-### 1️⃣ Presentation Layer (`presentation/`)
-
-- UI Screens & Widgets
-- State management using Riverpod
-- Handles user interaction
-
-**Example:**
-
-```
-chat/
- ├── chat_page.dart
- ├── chat_notifier.dart
- └── components/
-```
+- Flutter
+- Riverpod
+- Firebase Cloud Firestore
+- Freezed
+- SharedPreferences
 
 ---
 
-### 2️⃣ Domain Layer (`domain/`)
+## 🧪 Run Project
 
-- Business models
-- Repository contracts (abstract classes)
-
-**Key Principle:** No dependency on Flutter or external APIs
-
----
-
-### 3️⃣ Data Layer (`data/`)
-
-- API calls using Dio
-- Local storage (SharedPreferences)
-- Repository implementations
-
-```
-data/
- ├── source/
- │    ├── remote/
- │    └── local/
- ├── repository/
- └── model/
-```
-
----
-
-### 4️⃣ Core Layer (`core/`)
-
-Reusable utilities across the app:
-
-```
-core/
- ├── constants/
- ├── extensions/
- ├── providers/
- ├── exceptions/
- └── utils/
-```
-
-Includes:
-
-- Global providers (internet, token)
-- Custom exceptions
-- Extensions (BuildContext, Dio, etc.)
-
----
-
-### 5️⃣ Shared Components (`presentation/shared/`)
-
-Reusable UI components:
-
-```
-shared/components/
- ├── custom_filled_button.dart
- ├── custom_form_field.dart
- ├── loader_widget.dart
-```
-
-Ensures UI consistency and faster development.
-
----
-
-### 6️⃣ Theming (`theme/`)
-
-Material 3 based design system:
-
-```
-theme/
- ├── config/
- │    ├── app_theme.dart
- │    ├── color_schemes.dart
-```
-
-- Light & Dark mode support
-- Centralized styling
-
----
-
-## ⚙️ State Management
-
-This project uses **Riverpod with code generation**.
-
-- `Notifier` / `AsyncNotifier`
-- `.g.dart` generated providers
-
-**Example:**
-
-```
-chat_notifier.dart
-chat_notifier.g.dart
-```
-
-### ✅ Benefits:
-
-- Compile-time safety
-- Scalable architecture
-- Clear separation of concerns
-
----
-
-## 🌐 Networking
-
-- Built with **Dio**
-- Custom interceptors:
-    - Token interceptor
-    - Error interceptor
-    - Logging interceptor
-
-**Location:**
-
-```
-data/helper/
-```
-
----
-
-## 💾 Local Storage
-
-- SharedPreferences abstraction
-- Chat history stored locally
-
-```
-data/source/local/
-```
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-
-```
-git clone https://github.com/Krishnachoudhary619/demo-chat-app.git
-```
-
-### 2. Install dependencies
-
-```
+```bash
 flutter pub get
-```
-
-### 3. Generate code
-
-```
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-### 4. Run the app
-
-```
 flutter run
 ```
 
 ---
 
-## 🧠 Why This Architecture?
+## 📌 Final Summary
 
-- 🔹 Clear separation of concerns
-- 🔹 Scalable for large applications
-- 🔹 Easy to maintain and test
-- 🔹 Feature-based modular structure
-- 🔹 Strong integration with Riverpod
+This project demonstrates:
+
+- Clean architecture implementation
+- Offline-first chat system
+- Real-time data synchronization
+- Scalable state management
+- Production-level UI/UX
 
 ---
