@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDm0BXJAlzZ8TltPyyaEL_F1rCfaoxx0Zk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>4890680694</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.weq.flutter.master.dev</string>
+	<key>PROJECT_ID</key>
+	<string>rumour-app-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rumour-app-dev.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:4890680694:ios:0ed57a3fa9f10043b5ae57</string>
+</dict>
+</plist>

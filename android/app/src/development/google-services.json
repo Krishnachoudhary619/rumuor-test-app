@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4890680694",
+    "project_id": "rumour-app-dev",
+    "storage_bucket": "rumour-app-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4890680694:android:bb64257e4ae46cc8b5ae57",
+        "android_client_info": {
+          "package_name": "com.weq.flutter.master.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQXhzmSv_BHoG_oB5xhVTVHiVXyoaX7To"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

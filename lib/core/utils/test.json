@@ -1,0 +1,66 @@
+{
+    "results": [
+        {
+            "gender": "male",
+            "name": {
+                "title": "Mr",
+                "first": "Severin",
+                "last": "Kotelyanskiy"
+            },
+            "location": {
+                "street": {
+                    "number": 3730,
+                    "name": "Simirenka"
+                },
+                "city": "Baranivka",
+                "state": "Volinska",
+                "country": "Ukraine",
+                "postcode": 50382,
+                "coordinates": {
+                    "latitude": "80.0403",
+                    "longitude": "-42.7599"
+                },
+                "timezone": {
+                    "offset": "+2:00",
+                    "description": "Kaliningrad, South Africa"
+                }
+            },
+            "email": "severin.kotelyanskiy@example.com",
+            "login": {
+                "uuid": "c785d017-3e4b-41d9-bb47-d1a7e1605fd7",
+                "username": "crazykoala883",
+                "password": "quan",
+                "salt": "m4rTe1KR",
+                "md5": "e127cb874f0a6ed2d263e147fcf824ab",
+                "sha1": "ccda30fc1e7ed101ee6e675585eaddd14ad6243e",
+                "sha256": "680fb246bb897ffaf2595a93985407f447e24cda01c9974d08ebaf5ff9916e05"
+            },
+            "dob": {
+                "date": "1951-08-27T02:55:10.588Z",
+                "age": 74
+            },
+            "registered": {
+                "date": "2015-05-05T20:47:48.481Z",
+                "age": 10
+            },
+            "phone": "(099) C30-3984",
+            "cell": "(097) W14-9105",
+            "id": {
+                "name": "",
+                "value": null
+            },
+            "picture": {
+                "large": "https://randomuser.me/api/portraits/men/49.jpg",
+                "medium": "https://randomuser.me/api/portraits/med/men/49.jpg",
+                "thumbnail": "https://randomuser.me/api/portraits/thumb/men/49.jpg"
+            },
+            "nat": "UA"
+        }
+    ],
+    "info": {
+        "seed": "97936a43bea0298c",
+        "results": 1,
+        "page": 1,
+        "version": "1.4"
+    }
+}
