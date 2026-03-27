@@ -337,13 +337,13 @@ Pixel-perfect implementation based on Figma:
 
 ## 📦 APK
 
-👉 [Download APK](#)
+👉 [Download APK](https://drive.google.com/file/d/1Vzt8dPNtMVyOf_UrTvEEoKIAuA4KixMl/view?usp=drive_link)
 
 ---
 
 ## 🎥 Demo Video
 
-👉 [Watch Demo](#)
+👉 [Watch Demo](https://drive.google.com/file/d/1c4aOw5GbQYabLfVvO2w5lsNN0ayFZO6H/view?usp=drive_link)
 
 ---
 
