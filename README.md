@@ -325,13 +325,13 @@ Pixel-perfect implementation based on Figma:
 
 ## 📸 Screenshots
 
-| Home                           | Confirmation page                    | Chat page                      |
-| ------------------------------ | ------------------------------------ | ------------------------------ |
-| ![home](./screenshot/home.png) | ![confirm](./screenshot/confirm.png) | ![chat](./screenshot/chat.png) |
+| Home                                | Confirmation page                         | Chat page                           |
+| ----------------------------------- | ----------------------------------------- | ----------------------------------- |
+| ![home](./screenshot/home_page.png) | ![confirm](./screenshot/confirm_page.png) | ![chat](./screenshot/chat_page.png) |
 
-| App Icon & name                    | Splash                           |     |
-| ---------------------------------- | -------------------------------- | --- |
-| ![home](./screenshot/app_page.png) | ![chat](./screenshot/splash.png) | !   |
+| App Icon & name                        | Splash                                  |     |
+| -------------------------------------- | --------------------------------------- | --- |
+| ![App](./screenshot/app_home_page.png) | ![Splash](./screenshot/splash_page.png) | !   |
 
 ---
 
